@@ -1,3 +1,39 @@
+<?php
+session_start();
+include 'connect.php';
+if (isset($_SESSION["login"])) {
+  header('Location: overview.php');
+  exit;
+}
+
+include "connect.php";
+// Insert data
+if (isset($_POST['submit'])) {
+  $nrp = $_POST['nrp'];
+  $first_name = $_POST['first-name'];
+  $last_name = $_POST['last-name'];
+  $birth_place = $_POST['birth_place'];
+  $birthday = $_POST['birthday'];
+  $gender = $_POST['gender'];
+  $phone_number = $_POST['phone_number'];
+  $email = $_POST['email'];
+  $address = $_POST['address'];
+  $hobby = $_POST['hobby'];
+  $fav_object = $_POST['fav_object'];
+
+  $sql = "INSERT INTO `alphalink` (`nrp`, `nama`, `jenis_kelamin`, `email`, `alamat`, `no_hp`, `matkul_favorit`, `tempat_lahir`, `tanggal_lahir`, `hobi`) VALUES (
+'31236000$nrp', '" . $first_name . " " . $last_name . "'  , '$gender', '$email', '$address', '$phone_number','$fav_object', '$birth_place', '$birthday', '$hobby')";
+
+  if ($connectdb->query($sql)) {
+    header('Location: register.php');
+  } else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($connectdb);
+  }
+
+  $connectdb->close();
+
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,22 +45,6 @@
 </head>
 
 <body>
-  <!--  NAVBAR SECTION START -->
-  <nav class="bg-blue-400 py-5">
-    <div class="container w-10/12 mx-auto grid grid-cols-3">
-      <div class="font-bold text-white">
-        <a href="">LOGO</a>
-      </div>
-      <div class=" col-start-2">
-        <ul class="flex justify-center">
-          <li class="px-3 text-white"><a href=""></a>Home</li>
-          <li class="px-3 text-white"><a href=""></a>List</li>
-          <li class="px-3 text-white"><a href=""></a>About Us</li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- NAVBAR SECTION END -->
   <div class="flex justify-center w-7/12 mt-10">
     <h2 class="text-2xl font-semibold tracking-tight text-black sm:text-4xl">Fill Your Biodata!</h2>
   </div>
@@ -127,43 +147,14 @@
         </div>
       </div>
       <div class="mt-6 flex items-center justify-end gap-x-6">
-        <a href="index.php"><button type="button"
+        <a href="login.php"><button type="button"
             class="text-sm font-semibold leading-6 text-gray-900">Cancel</button></a>
         <button type="submit" name="submit"
-          class="rounded-md pl-3 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm ">Save</button>
+          class="rounded-md pl-3 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm ">Create</button>
       </div>
     </div>
   </form>
   <!-- FORM SECTION END -->
-
-  <?php
-  include "connect.php";
-  // Insert data
-  if (isset($_POST['submit'])) {
-    $nrp = $_POST['nrp'];
-    $first_name = $_POST['first-name'];
-    $last_name = $_POST['last-name'];
-    $birth_place = $_POST['birth_place'];
-    $birthday = $_POST['birthday'];
-    $gender = $_POST['gender'];
-    $phone_number = $_POST['phone_number'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-    $hobby = $_POST['hobby'];
-    $fav_object = $_POST['fav_object'];
-
-    $sql = "INSERT INTO `alphalink` (`nrp`, `nama`, `jenis_kelamin`, `email`, `alamat`, `no_hp`, `matkul_favorit`, `tempat_lahir`, `tanggal_lahir`, `hobi`) VALUES (
-  '31236000$nrp', '" . $first_name . " " . $last_name . "'  , '$gender', '$email', '$address', '$phone_number','$fav_object', '$birth_place', '$birthday', '$hobby')";
-
-    if ($connectdb->query($sql) == true) {
-      echo "Data berhasil ditambahkan<br>";
-    } else {
-      echo "Error: " . $sql . "<br>" . mysqli_error($connectdb);
-    }
-
-    $connectdb->close();
-  }
-  ?>
 </body>
 
 </html>

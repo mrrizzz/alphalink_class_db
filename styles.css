@@ -3,12 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* 
+.bg-primary{
+  background-color: #2F27CE;
+} */
+.placeholder-italic-custom::placeholder {
+  font-style: italic;
+}
 
-body {
-  font-family: Poppins;
-  line-height: 1.6;
-  background-color: #ffffff;
-  color: #333;
-  margin: 0;
-  padding: 0;
+.bg-primary{
+  color: #004AAD;
 }
