@@ -16,6 +16,7 @@ if (isset($_POST["login"])) {
   if ($row = $result->fetch_assoc()) {
     if (password_verify($password, $row["password"])) {
       $_SESSION["login"] = true;
+      setcookie('users', $username);
       header('Location: overview.php');
       exit;
     }
@@ -62,7 +63,7 @@ if (isset($_POST["login"])) {
                 echo ' <div class="mt-5 ">';
                 echo ' <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">Password </label>';
                 echo ' <div class="flex"><input';
-                echo ' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"';
+                echo ' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"';
                 echo ' placeholder="password" type="password" required name="password"></div>';
                 echo ' </div>';
               } else {
@@ -83,6 +84,7 @@ if (isset($_POST["login"])) {
                 echo '<p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium italic">wrong username or password!</span></p>';
                 echo '</div>';
               }
+
               ?>
               <div class="mt-7">
                 <button type="submit" name="login"
@@ -93,7 +95,7 @@ if (isset($_POST["login"])) {
           <div class="w-10/12 mx-auto">
             <div class="flex justify-between ">
               <p class="text-xs">Dont have account?</p>
-              <a class="text-xs underline" href="create.php">Create account!</a>
+              <a class="text-xs underline" href="register.php">Create account!</a>
             </div>
           </div>
         </div>

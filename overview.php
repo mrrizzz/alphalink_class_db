@@ -19,6 +19,7 @@
 <body>
   <?php
   session_start();
+  include 'guard.php';
   include 'sidebar.php';
   include 'navbar.php';
   ?>

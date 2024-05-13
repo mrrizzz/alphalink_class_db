@@ -59,7 +59,7 @@
   include 'connect.php';
   if (isset($_POST['signup'])) {
     if (konfirmasi_password($_POST)) {
-      header('Location: login.php');
+      header('Location: create.php');
     } else
       echo $connectdb->error;
   }
@@ -83,7 +83,7 @@
       echo "<script> alert ('konfirmasi password tidak sesuai')</script>";
       return false;
     }
-
+    setcookie('users', "$users");
     $pw = password_hash($pw, PASSWORD_DEFAULT);
     $sql = "INSERT INTO alphalink (`username`, `password`) VALUE ('$users', '$pw')";
     $connectdb->query($sql);

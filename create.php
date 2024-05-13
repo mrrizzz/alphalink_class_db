@@ -1,10 +1,10 @@
 <?php
-session_start();
-include 'connect.php';
-if (isset($_SESSION["login"])) {
-  header('Location: overview.php');
-  exit;
-}
+// session_start();
+// include 'connect.php';
+// if (isset($_SESSION["login"])) {
+//   header('Location: overview.php');
+//   exit;
+// }
 
 include "connect.php";
 // Insert data
@@ -20,12 +20,32 @@ if (isset($_POST['submit'])) {
   $address = $_POST['address'];
   $hobby = $_POST['hobby'];
   $fav_object = $_POST['fav_object'];
+  
+  $key = $_COOKIE['users'];                    
 
-  $sql = "INSERT INTO `alphalink` (`nrp`, `nama`, `jenis_kelamin`, `email`, `alamat`, `no_hp`, `matkul_favorit`, `tempat_lahir`, `tanggal_lahir`, `hobi`) VALUES (
-'31236000$nrp', '" . $first_name . " " . $last_name . "'  , '$gender', '$email', '$address', '$phone_number','$fav_object', '$birth_place', '$birthday', '$hobby')";
+  // Update data berdasarkan username yang sesuai
+  $sql = "UPDATE `alphalink` SET 
+  nrp = '31236000$nrp', 
+  nama = '" . $first_name . " " . $last_name . "', 
+  jenis_kelamin = '$gender', 
+  email = '$email', 
+  alamat = '$address', 
+  no_hp = '$phone_number', 
+  matkul_favorit = '$fav_object', 
+  tempat_lahir = '$birth_place', 
+  tanggal_lahir = '$birthday', 
+  hobi = '$hobby' 
+  WHERE username = '$key'";
+  
+  if ($connectdb->query($sql)) {
+    header('Location: overview.php');
+  } else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($connectdb);
+  }
+  
 
   if ($connectdb->query($sql)) {
-    header('Location: register.php');
+    header('Location: overview.php');
   } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($connectdb);
   }
@@ -34,6 +54,7 @@ if (isset($_POST['submit'])) {
 
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
